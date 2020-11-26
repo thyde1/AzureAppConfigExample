@@ -7,6 +7,8 @@ namespace AzureAppConfigurationExample
     using Microsoft.Extensions.Configuration.AzureAppConfiguration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.FeatureManagement;
+    using Microsoft.FeatureManagement.FeatureFilters;
     using System;
 
     public class Startup
@@ -43,6 +45,8 @@ namespace AzureAppConfigurationExample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(this.Configuration);
+            services.AddFeatureManagement()
+                .AddFeatureFilter<PercentageFilter>();
             services.AddControllers();
         }
 
