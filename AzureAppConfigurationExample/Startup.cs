@@ -1,6 +1,7 @@
 namespace AzureAppConfigurationExample
 {
     using Azure.Identity;
+    using AzureAppConfigurationExample.FeatureFilters;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -45,8 +46,10 @@ namespace AzureAppConfigurationExample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(this.Configuration);
+            services.AddHttpContextAccessor();
             services.AddFeatureManagement()
-                .AddFeatureFilter<PercentageFilter>();
+                .AddFeatureFilter<PercentageFilter>()
+                .AddFeatureFilter<SecretFeatureFilter>();
             services.AddControllers();
         }
 

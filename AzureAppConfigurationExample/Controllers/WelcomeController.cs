@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.FeatureManagement;
+    using Microsoft.FeatureManagement.Mvc;
     using System.Threading.Tasks;
 
     [ApiController]
@@ -27,6 +28,13 @@
             var featureString = await this.featureManager.IsEnabledAsync("CoolNewFeature") ? "This is cool and new" : "This is old and boring";
             var betaString = await this.featureManager.IsEnabledAsync("InterestingBetaFeature") ? "You are one of the lucky ones to try our new beta thingy" : "";
             return $"{greeting}\n{environmentDetail}\n(The key is {key})\n{featureString}\n{betaString}";
+        }
+
+        [FeatureGate("SecretFeature")]
+        [HttpGet("/secret")]
+        public string Secret()
+        {
+            return "You've got the secret!";
         }
     }
 }
