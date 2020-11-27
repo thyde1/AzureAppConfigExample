@@ -16,7 +16,7 @@
 
         public Task<bool> EvaluateAsync(FeatureFilterEvaluationContext context)
         {
-            return Task.FromResult(this.httpContextAccessor.HttpContext.Request.Query["secret"] == "chips");
+            return Task.FromResult(this.httpContextAccessor.HttpContext.Request.Query["secret"] == context.Parameters["secret"]);
         }
     }
 }
